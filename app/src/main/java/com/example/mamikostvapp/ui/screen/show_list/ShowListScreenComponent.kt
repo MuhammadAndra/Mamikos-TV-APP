@@ -25,17 +25,18 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import com.example.mamikostvapp.data.model.Show
 import com.example.mamikostvapp.data.model.ShowListItem
 
 
 @Composable
-fun ShowListCard(modifier: Modifier = Modifier, item: ShowListItem) {
+fun ShowListCard(modifier: Modifier = Modifier, item: Show/*item: ShowListItem*/) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         AsyncImage(
-            model = item.imageUrl,
+            model = item.image.medium,
             contentDescription = "image of ${item.name}",
             modifier = Modifier
                 .fillMaxWidth()
@@ -60,7 +61,7 @@ fun ShowListCard(modifier: Modifier = Modifier, item: ShowListItem) {
                     tint = Color(0xffFF8700)
                 )
                 Text(
-                    text = " ${item.rating ?: "No Rating"}",
+                    text = " ${item.rating.average ?: "No Rating"}",
                     color = Color(0xffFF8700),
                     fontSize = 16.sp
                 )
@@ -104,7 +105,6 @@ fun ShowListCardSkeleton(modifier: Modifier = Modifier) {
                         color = Color(0xFF303841),
                     )
             )
-
         }
     }
 }
