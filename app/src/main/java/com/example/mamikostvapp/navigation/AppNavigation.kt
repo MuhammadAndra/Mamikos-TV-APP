@@ -14,7 +14,7 @@ fun AppNavigation(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = ShowDetail(1)
+        startDestination = ShowList
     ) {
         mainGraph(navController = navController)
     }

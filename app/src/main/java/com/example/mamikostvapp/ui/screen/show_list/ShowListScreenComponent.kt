@@ -13,8 +13,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,17 +28,18 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import com.example.mamikostvapp.data.model.Show
 import com.example.mamikostvapp.data.model.ShowListItem
 
 
 @Composable
-fun ShowListCard(modifier: Modifier = Modifier, item: ShowListItem) {
+fun ShowListCard(modifier: Modifier = Modifier, item: Show/*item: ShowListItem*/) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         AsyncImage(
-            model = item.imageUrl,
+            model = item.image.medium,
             contentDescription = "image of ${item.name}",
             modifier = Modifier
                 .fillMaxWidth()
@@ -60,7 +64,7 @@ fun ShowListCard(modifier: Modifier = Modifier, item: ShowListItem) {
                     tint = Color(0xffFF8700)
                 )
                 Text(
-                    text = " ${item.rating ?: "No Rating"}",
+                    text = " ${item.rating.average ?: "No Rating"}",
                     color = Color(0xffFF8700),
                     fontSize = 16.sp
                 )
@@ -104,7 +108,28 @@ fun ShowListCardSkeleton(modifier: Modifier = Modifier) {
                         color = Color(0xFF303841),
                     )
             )
-
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ShowListTopBar(modifier: Modifier = Modifier) {
+    TopAppBar(
+        title = {
+            Text(
+                text = "What do you want to watch?",
+                color = Color.White,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold
+            )
+        },
+        colors = TopAppBarColors(
+            containerColor = Color.Transparent,
+            scrolledContainerColor = Color.Transparent,
+            navigationIconContentColor = Color.Transparent,
+            titleContentColor = Color.Transparent,
+            actionIconContentColor = Color.Transparent
+        ),
+    )
 }
