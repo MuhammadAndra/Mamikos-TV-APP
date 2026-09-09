@@ -4,6 +4,7 @@ import com.example.mamikostvapp.data.model.Show
 import com.example.mamikostvapp.navigation.nav_graph.ShowList
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ShowApiService {
@@ -12,4 +13,10 @@ interface ShowApiService {
         @Query("page")
         page: Int
     ): Response<List<Show>>
+
+    @GET("/shows/{id}")
+    suspend fun getShowDetail(
+        @Path("id")
+        id: Int
+    ): Response<Show>
 }

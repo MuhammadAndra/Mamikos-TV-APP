@@ -1,5 +1,6 @@
 package com.example.mamikostvapp.navigation.nav_graph
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -12,16 +13,24 @@ import kotlinx.serialization.Serializable
 object ShowList
 
 @Serializable
-data class ShowDetail(val id: Int)
+data class ShowDetail(val id: Int) {
+    companion object {
+        fun from(savedStateHandle: SavedStateHandle) =
+            savedStateHandle.toRoute<ShowDetail>()
+    }
+}
 
 fun NavGraphBuilder.mainGraph(navController: NavController) {
 
     composable<ShowList> {
-        ShowListScreen()
+        ShowListScreen(
+            onNavigateToDetail = { id ->
+                navController.navigate(ShowDetail(id))
+            }
+        )
     }
 
-    composable<ShowDetail> { backStackEntry ->
-        val showDetail = backStackEntry.toRoute<ShowDetail>()
-        ShowDetailScreen()
+    composable<ShowDetail> {
+        ShowDetailScreen(onBackClick = {navController.navigateUp()})
     }
 }

@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
@@ -29,7 +28,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.example.mamikostvapp.data.model.Show
-import com.example.mamikostvapp.data.model.ShowListItem
 
 
 @Composable
@@ -44,7 +42,11 @@ fun ShowListCard(modifier: Modifier = Modifier, item: Show/*item: ShowListItem*/
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(210f / 295f)
-                .clip(RoundedCornerShape(26.dp))
+                .background(
+                    shape = RoundedCornerShape(13.dp),
+                    color = Color(0xFF303841)
+                )
+                .clip(RoundedCornerShape(13.dp))
         )
         Column(verticalArrangement = Arrangement.spacedBy(5.dp)) {
             Text(
