@@ -60,7 +60,7 @@ fun ShowListCard(modifier: Modifier = Modifier, item: ShowListItem) {
                     tint = Color(0xffFF8700)
                 )
                 Text(
-                    text = " ${item.rating} / 10",
+                    text = " ${item.rating ?: "No Rating"}",
                     color = Color(0xffFF8700),
                     fontSize = 16.sp
                 )
