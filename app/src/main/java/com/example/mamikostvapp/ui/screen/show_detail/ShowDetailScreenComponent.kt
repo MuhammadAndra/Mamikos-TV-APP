@@ -10,18 +10,15 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -35,7 +32,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil3.compose.AsyncImage
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -128,8 +124,7 @@ fun PremiereDateCard(
 fun ShowDetailScreenSkeleton(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
-            .padding(start = 24.dp, end = 24.dp)
-            .fillMaxSize(),
+            .fillMaxSize().background(color = Color.Transparent),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
@@ -167,22 +162,47 @@ fun ShowDetailScreenSkeleton(modifier: Modifier = Modifier) {
             )
         }
         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .background(
+                            shape = RoundedCornerShape(13.dp),
+                            color =Color(0xFF303841),
+                        )
+                        .weight(1f)
+                        .height(40.dp)
+                )
+                Box(
+                    modifier = Modifier
+                        .background(
+                            shape = RoundedCornerShape(13.dp),
+                            color = Color(0xFF303841),
+                        )
+                        .weight(1f)
+                        .height(40.dp)
+                )
+                Box(
+                    modifier = Modifier
+                        .background(
+                            shape = RoundedCornerShape(13.dp),
+                            color = Color(0xFF303841),
+                        )
+                        .weight(1f)
+                        .height(40.dp)
+                )
+            }
             Box(
                 modifier = Modifier
-                    .background(
-                        shape = RoundedCornerShape(13.dp),
-                        color = Color(0xFF303841),
-                    )
-                    .fillMaxWidth()
-                    .height(40.dp)
-            )
-            Box(
-                modifier = Modifier
-                    .background(
-                        shape = RoundedCornerShape(13.dp),
-                        color = Color(0xFF303841),
-                    )
                     .fillMaxSize()
+                    .height(350.dp)
+                    .background(
+                        shape = RoundedCornerShape(13.dp),
+                        color = Color(0xFF303841),
+                    )
+                    .fillMaxHeight()
             )
         }
     }

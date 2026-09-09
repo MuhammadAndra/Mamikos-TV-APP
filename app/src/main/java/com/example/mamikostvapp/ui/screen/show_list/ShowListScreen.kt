@@ -1,29 +1,16 @@
 package com.example.mamikostvapp.ui.screen.show_list
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Error
-import androidx.compose.material.icons.filled.Movie
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
@@ -37,18 +24,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.mamikostvapp.data.model.ShowListItem
-import com.example.mamikostvapp.data.model.dummyShows
+
 import com.example.mamikostvapp.ui.component.ErrorComponent
 import com.example.saferecycle.ui.state.UiState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ShowListScreen(modifier: Modifier = Modifier) {
+fun ShowListScreen(
+    modifier: Modifier = Modifier,
+    onNavigateToDetail: (Int) -> Unit
+) {
     val vm: ShowListViewmodel = viewModel()
     val showsState by vm.shows.collectAsState()
 
@@ -59,7 +46,7 @@ fun ShowListScreen(modifier: Modifier = Modifier) {
     val state = rememberPullToRefreshState()
     var isUserRefreshing by remember { mutableStateOf(false) }
     LaunchedEffect(showsState) {
-        if (showsState !is UiState.Loading)  isUserRefreshing = false
+        if (showsState !is UiState.Loading) isUserRefreshing = false
     }
 
     Scaffold(
@@ -101,7 +88,12 @@ fun ShowListScreen(modifier: Modifier = Modifier) {
                         val shows =
                             (showsState as UiState.Success).data
                         items(shows) { show ->
-                            ShowListCard(item = show)
+                            ShowListCard(
+                                modifier = Modifier.clickable {
+                                    onNavigateToDetail(show.id)
+                                },
+                                item = show
+                            )
                         }
                     }
                     //implement error
@@ -115,6 +107,7 @@ fun ShowListScreen(modifier: Modifier = Modifier) {
                             )
                         }
                     }
+
                     else -> {}
                 }
             }

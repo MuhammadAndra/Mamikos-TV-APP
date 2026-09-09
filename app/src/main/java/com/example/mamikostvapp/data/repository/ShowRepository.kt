@@ -10,4 +10,8 @@ class ShowRepository: BaseRepository() {
         val result = safeApiCall { api.getShow(page) }
         return result
     }
+    suspend fun getShowDetail(id:Int): DataResult<Show>{
+        val result = safeApiCall { api.getShowDetail(id) }
+        return result
+    }
 }
