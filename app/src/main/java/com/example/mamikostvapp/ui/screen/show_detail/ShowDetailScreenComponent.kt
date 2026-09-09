@@ -1,0 +1,189 @@
+package com.example.mamikostvapp.ui.screen.show_detail
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.VerticalDivider
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ShowDetailTopBar(
+    modifier: Modifier = Modifier,
+    onBackClick: () -> Unit,
+    onShareClick: () -> Unit
+) {
+    CenterAlignedTopAppBar(
+        colors = TopAppBarColors(
+            containerColor = Color.Transparent,
+            scrolledContainerColor = Color.Transparent,
+            navigationIconContentColor = Color.Transparent,
+            titleContentColor = Color.Transparent,
+            actionIconContentColor = Color.Transparent
+        ),
+        navigationIcon = {
+            IconButton(onClick = onBackClick) {
+                Icon(
+                    Icons.AutoMirrored.Filled.ArrowBack,
+                    tint = Color.White,
+                    contentDescription = ""
+                )
+            }
+        },
+        title = {
+            Text(
+                "Detail",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White
+            )
+        },
+        actions = {
+            IconButton(onClick = onShareClick) {
+                Icon(
+                    Icons.Filled.Share,
+                    tint = Color.White,
+                    contentDescription = ""
+                )
+            }
+        }
+    )
+}
+
+@Composable
+fun PremiereDateCard(
+    modifier: Modifier = Modifier,
+    premiereDate: String,
+    rating: Double?
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+
+        horizontalArrangement = Arrangement.spacedBy(15.dp)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(5.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Filled.DateRange,
+                contentDescription = "Premiere Date Icon",
+                tint = Color.Gray,
+                modifier = Modifier.size(18.dp)
+            )
+            Text(premiereDate, fontSize = 18.sp, color = Color.Gray)
+        }
+        VerticalDivider(Modifier.height(18.dp), color = Color.Gray)
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(5.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Star,
+                contentDescription = "Rating Icon",
+                tint = Color.Gray,
+                modifier = Modifier.size(18.dp)
+            )
+            Text(
+                "${rating ?: " No Rating"}",
+                fontSize = 18.sp,
+                color = Color.Gray
+            )
+        }
+    }
+}
+
+@Composable
+fun ShowDetailScreenSkeleton(modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier
+            .padding(start = 24.dp, end = 24.dp)
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(10.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth(0.5f)
+                .aspectRatio(210f / 295f)
+                .clip(RoundedCornerShape(20.dp))
+                .background(color = Color(0xFF303841))
+
+        )
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(25.dp)
+                    .background(
+                        shape = RoundedCornerShape(13.dp),
+                        color = Color(0xFF303841),
+                    )
+            )
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(0.4f)
+                    .height(18.dp)
+                    .background(
+                        shape = RoundedCornerShape(13.dp),
+                        color = Color(0xFF303841),
+                    )
+            )
+        }
+        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Box(
+                modifier = Modifier
+                    .background(
+                        shape = RoundedCornerShape(13.dp),
+                        color = Color(0xFF303841),
+                    )
+                    .fillMaxWidth()
+                    .height(40.dp)
+            )
+            Box(
+                modifier = Modifier
+                    .background(
+                        shape = RoundedCornerShape(13.dp),
+                        color = Color(0xFF303841),
+                    )
+                    .fillMaxSize()
+            )
+        }
+    }
+}
