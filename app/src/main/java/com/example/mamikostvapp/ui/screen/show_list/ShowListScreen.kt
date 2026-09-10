@@ -25,8 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mamikostvapp.ui.component.ErrorComponent
 import com.example.saferecycle.ui.state.UiState
 
@@ -34,9 +33,9 @@ import com.example.saferecycle.ui.state.UiState
 @Composable
 fun ShowListScreen(
     modifier: Modifier = Modifier,
+    vm: ShowListViewmodel = hiltViewModel(),
     onNavigateToDetail: (Int) -> Unit
 ) {
-    val vm: ShowListViewmodel = viewModel()
     val showsState by vm.shows.collectAsState()
 
     //initial load
