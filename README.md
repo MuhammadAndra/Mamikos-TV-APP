@@ -2,6 +2,9 @@
 
 A simple Android TV show browser application built with Kotlin and Jetpack Compose using the TVMaze API.
 
+## 5-Minute Walkthrough Video
+https://drive.google.com/file/d/1GHf6dPUpSXhEmwtQZQlxdxgzqyXjoVuX/view?usp=drive_link
+
 ## Features
 
 - Browse TV shows from TVMaze API
