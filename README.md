@@ -49,6 +49,10 @@ In this project i could only implement the required functionality because of tim
 The following optional features were not implemented due to the time constraint:
 
 - Pagination
-- Season information
+- Season information✅
 - Episode information
-- Cast information
+- Cast information✅
+
+## Update
+
+I able to squeeze some time and add some optional task by showing season and cast information
