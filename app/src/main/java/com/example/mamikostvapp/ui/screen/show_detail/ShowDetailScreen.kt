@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -55,15 +56,27 @@ fun ShowDetailScreen(
     onBackClick: () -> Unit
 ) {
     val showDetailState by vm.showDetail.collectAsState()
+    val showSeasonsState by vm.showSeasons.collectAsState()
+    val showCastsState by vm.showCasts.collectAsState()
 
     //initial load
-    LaunchedEffect(Unit) { vm.loadShowDetail() }
+    LaunchedEffect(Unit) {
+        vm.loadShowDetail()
+        vm.loadShowSeasons()
+        vm.loadShowCasts()
+    }
 
     //handle refresh
     val state = rememberPullToRefreshState()
     var isUserRefreshing by remember { mutableStateOf(false) }
     LaunchedEffect(showDetailState) {
         if (showDetailState !is UiState.Loading) isUserRefreshing = false
+    }
+    LaunchedEffect(showSeasonsState) {
+        if (showSeasonsState !is UiState.Loading) isUserRefreshing = false
+    }
+    LaunchedEffect(showCastsState) {
+        if (showCastsState !is UiState.Loading) isUserRefreshing = false
     }
 
     //handle Tab
@@ -95,6 +108,8 @@ fun ShowDetailScreen(
             onRefresh = {
                 isUserRefreshing = true
                 vm.loadShowDetail()
+                vm.loadShowSeasons()
+                vm.loadShowCasts()
             },
             state = state,
             indicator = {
@@ -196,36 +211,67 @@ fun ShowDetailScreen(
                                     }
 
                                 }
-                                when (selectedTabIndex) {
-                                    0 -> {
-                                        Text(
-                                            showDetail.summary.cleanHtml(),
-                                            fontSize = 16.sp,
-                                            textAlign = TextAlign.Justify,
-                                            color = Color.White,
-                                            modifier = Modifier.padding(top = 12.dp),
-                                        )
-                                    }
+                            }
+                            when (selectedTabIndex) {
+                                0 -> {
+                                    Text(
+                                        showDetail.summary.cleanHtml(),
+                                        fontSize = 16.sp,
+                                        textAlign = TextAlign.Justify,
+                                        color = Color.White,
+                                        modifier = Modifier.padding(top = 12.dp),
+                                    )
+                                }
 
-                                    1 -> {
-                                        Text(
-                                            "Season", fontSize = 16.sp,
-                                            textAlign = TextAlign.Justify,
-                                            color = Color.White,
-                                            modifier = Modifier.padding(top = 12.dp),
-                                        )
-                                    }
+                                1 -> {
+                                    //when showSeasonState success error, loading,
+                                    when (showSeasonsState) {
+                                        is UiState.Success -> {
+                                            val seasons =
+                                                (showSeasonsState as UiState.Success).data
+                                            Column(
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .padding(top = 12.dp),
+                                                verticalArrangement = Arrangement.spacedBy(
+                                                    12.dp
+                                                )
+                                            ) {
+                                                seasons.forEach { season ->
+                                                    ShowSeasonCard(season = season)
+                                                }
+                                            }
+                                        }
 
-                                    2 -> {
-                                        Text(
-                                            "Cast", fontSize = 16.sp,
-                                            textAlign = TextAlign.Justify,
-                                            color = Color.White,
-                                            modifier = Modifier.padding(top = 12.dp),
-                                        )
+                                        else -> {}
+                                    }
+                                }
+
+                                2 -> {
+                                    //when showCastState success error, loading,
+                                    when (showCastsState) {
+                                        is UiState.Success -> {
+                                            val casts =
+                                                (showCastsState as UiState.Success).data
+                                            Column(
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .padding(top = 12.dp),
+                                                verticalArrangement = Arrangement.spacedBy(
+                                                    12.dp
+                                                )
+                                            ) {
+                                                casts.forEach { cast ->
+                                                    ShowCastCard(cast = cast)
+                                                }
+                                            }
+                                        }
+
+                                        else -> {}
                                     }
                                 }
                             }
+
                         }
                     }
 
