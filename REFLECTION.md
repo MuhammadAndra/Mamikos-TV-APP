@@ -1,0 +1,8 @@
+## Reflection
+this file will containing my answer to part 4 of mamikos internship technical test
+
+1. my least confident part about my submission is the fact that i can't complete all the optional assignment to get more point. i also not confident about my app accessibilty in larger devices
+2. there's one moment in my previous internship where i assigned a task where i need to implement a technology that i never used before. at that time the technology is handling NFC communication in Android. At that time i ask for my internship mentor to learn and experimenting with this tech before i start working on the big project. i spent a week to learn how to implement NFC and also researching what hardware i need to use during this project. i study from a lot of sources such as code discussion forum, code documentation, youtube tutorials, and many more. in the end i found the simplest solution to solve that project problem and able to finish all work on time. 
+3. i think i will contact my supervisor about this problem and ask for a time extension. but if it not possible then i will do whatever i need to do to fix my mess like pulling a all nighter. and begging my coworker to help me. 
+4. i will try to explain why i choose this approach and ask for more explanation for the new approach. after that if my supervisor still ask me change my approach then i will do what my supervisor ask
+5. something technical that i learned outside of class/work maybe in my thesis. my topics is in android app performance comparation. i learned to use Macrobenchmark Libary to get valuable data like Memory, CPU, and Execution Time. i learned this while reading my upperclassmen work and watching youtube video on how to implement them. 
