@@ -5,13 +5,18 @@ import androidx.lifecycle.viewModelScope
 import com.example.mamikostvapp.data.DataResult
 import com.example.mamikostvapp.data.model.Show
 import com.example.mamikostvapp.data.repository.ShowRepository
+import com.example.mamikostvapp.data.repository.ShowRepositoryInterface
 import com.example.saferecycle.ui.state.UiState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ShowListViewmodel : ViewModel() {
-    private val repository = ShowRepository()
+@HiltViewModel
+class ShowListViewmodel @Inject constructor(
+    private val repository: ShowRepositoryInterface
+) : ViewModel() {
     private val _shows = MutableStateFlow<UiState<List<Show>>>(UiState.Idle)
     val shows = _shows
 
@@ -32,7 +37,6 @@ class ShowListViewmodel : ViewModel() {
 
                 is DataResult.Empty -> _shows.value = UiState.Empty
             }
-
         }
     }
 }

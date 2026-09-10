@@ -17,8 +17,8 @@ data class Show(
     val rating: Rating,
     val weight: Int,
     val network: Network,
-    val webChannel: Any,
-    val dvdCountry: Any,
+    val webChannel: Any?,
+    val dvdCountry: Any?,
     val externals: Externals,
     val image: Image,
     val summary: String,
@@ -46,7 +46,7 @@ data class Network(
     val country: Country,
     val id: Int,
     val name: String,
-    val officialSite: Any
+    val officialSite: Any?
 )
 
 data class Rating(

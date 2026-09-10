@@ -34,23 +34,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.text.HtmlCompat
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import com.example.mamikostvapp.ui.component.ErrorComponent
 import com.example.saferecycle.ui.state.UiState
+import dagger.hilt.android.lifecycle.HiltViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ShowDetailScreen(
     modifier: Modifier = Modifier,
+    vm: ShowDetailViewmodel = hiltViewModel(),
     onBackClick: () -> Unit
 ) {
-    val vm: ShowDetailViewmodel = viewModel()
     val showDetailState by vm.showDetail.collectAsState()
 
     //initial load
@@ -63,9 +66,24 @@ fun ShowDetailScreen(
         if (showDetailState !is UiState.Loading) isUserRefreshing = false
     }
 
+    //handle Tab
     var selectedTabIndex by remember { mutableIntStateOf(0) }
+
+    //handle Share Action
+    val context = LocalContext.current
+
     Scaffold(
-        topBar = { ShowDetailTopBar(onBackClick = onBackClick, onShareClick = {}) },
+        topBar = {
+            ShowDetailTopBar(
+                onBackClick = onBackClick,
+                onShareClick = {
+                    if (showDetailState is UiState.Success) {
+                        val show = (showDetailState as UiState.Success).data
+                        vm.shareShow(context, show = show)
+                    }
+                }
+            )
+        },
         containerColor = Color(0xFF242A32)
     ) { innerPadding ->
         PullToRefreshBox(
