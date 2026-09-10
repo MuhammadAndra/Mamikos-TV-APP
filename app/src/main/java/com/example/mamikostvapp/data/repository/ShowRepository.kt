@@ -1,6 +1,8 @@
 package com.example.mamikostvapp.data.repository
 
 import com.example.mamikostvapp.data.DataResult
+import com.example.mamikostvapp.data.model.Cast
+import com.example.mamikostvapp.data.model.Season
 import com.example.mamikostvapp.data.model.Show
 import com.example.mamikostvapp.data.network.NetworkModule
 import com.example.mamikostvapp.data.network.api_service.ShowApiService
@@ -16,8 +18,19 @@ class ShowRepository @Inject constructor(
         return result
     }
 
+    override suspend fun getSeasons(id: Int): DataResult<List<Season>> {
+        val result = safeApiCall { api.getShowSeasons(id) }
+        return  result
+    }
+
+    override suspend fun getCasts(id: Int): DataResult<List<Cast>> {
+        val result = safeApiCall { api.getShowCasts(id) }
+        return result
+    }
+
     override suspend fun getShowDetail(id: Int): DataResult<Show> {
         val result = safeApiCall { api.getShowDetail(id) }
         return result
     }
+
 }

@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
@@ -47,6 +48,7 @@ fun ShowListScreen(
     LaunchedEffect(showsState) {
         if (showsState !is UiState.Loading) isUserRefreshing = false
     }
+    val gridState = rememberLazyGridState()
 
     Scaffold(
         topBar = {
@@ -62,7 +64,7 @@ fun ShowListScreen(
             isRefreshing = isUserRefreshing,
             onRefresh = {
                 isUserRefreshing = true
-                vm.loadShows()
+                vm.refreshShows()
             },
             state = state,
             indicator = {
@@ -76,6 +78,7 @@ fun ShowListScreen(
             }
         ) {
             LazyVerticalGrid(
+                state = gridState,
                 modifier = Modifier.fillMaxSize(),
                 horizontalArrangement = Arrangement.spacedBy(24.dp),
                 verticalArrangement = Arrangement.spacedBy(24.dp),

@@ -22,8 +22,35 @@ class ShowListViewmodel @Inject constructor(
 
     //don't hardcode page = 0
     //improvement: use pagination
+//    fun loadShows() {
+//        _shows.value = UiState.Loading
+//        viewModelScope.launch(Dispatchers.IO) {
+//            when (val result = repository.getShows(0)) {
+//                is DataResult.Success -> {
+//                    _shows.value = UiState.Success(result.data)
+//                }
+//
+//                is DataResult.Error -> {
+//                    val error = result.error
+//                    _shows.value = UiState.Error(error)
+//                }
+//
+//                is DataResult.Empty -> _shows.value = UiState.Empty
+//            }
+//        }
+//    }
     fun loadShows() {
+        if (_shows.value is UiState.Success) return
+        fetchShows()
+    }
+
+    fun refreshShows() {
+        fetchShows()
+    }
+
+    private fun fetchShows() {
         _shows.value = UiState.Loading
+
         viewModelScope.launch(Dispatchers.IO) {
             when (val result = repository.getShows(0)) {
                 is DataResult.Success -> {
@@ -31,11 +58,12 @@ class ShowListViewmodel @Inject constructor(
                 }
 
                 is DataResult.Error -> {
-                    val error = result.error
-                    _shows.value = UiState.Error(error)
+                    _shows.value = UiState.Error(result.error)
                 }
 
-                is DataResult.Empty -> _shows.value = UiState.Empty
+                is DataResult.Empty -> {
+                    _shows.value = UiState.Empty
+                }
             }
         }
     }
